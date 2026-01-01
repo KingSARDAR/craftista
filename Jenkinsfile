@@ -1,21 +1,33 @@
 pipeline {
-  agent any 
+  agent any
+  stages {
+    stage('Voting build') {
+      steps {
+        dir(path: 'voting') {
+          sh 'mvn compile'
+        }
+
+      }
+    }
+
+    stage('') {
+      steps {
+        dir(path: '/voting') {
+          sh 'mvn clean test'
+        }
+
+      }
+    }
+
+  }
   tools {
     jdk 'JDK17'
     maven 'Maven'
   }
-  stages {
-   stage('Voting build') {
-     steps {
-       dir('voting') {
-	sh 'mvn compile'
-      }
-     }  
-   }
- }
- post {
-  always {
-   echo 'Pipeline completed successfully'
+  post {
+    always {
+      echo 'Pipeline completed successfully'
+    }
+
   }
- } 
 }
